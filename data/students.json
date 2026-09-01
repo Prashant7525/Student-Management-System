@@ -1,0 +1,12 @@
+{
+    "STU001": {
+        "student_id": "STU001",
+        "name": "Rahul Kumar",
+        "age": 20,
+        "email": "rahul@example.com",
+        "course": "Computer Science",
+        "marks": {
+            "Python": 90.0
+        }
+    }
+}
