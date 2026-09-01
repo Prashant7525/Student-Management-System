@@ -2,7 +2,7 @@
 
 A beginner-to-intermediate Python project for managing student records, academic information, marks, and results through a command-line interface.
 
-The project is designed using a clean layered architecture with validation, JSON-based persistence, automated testing, and modular code organization.
+The project is designed using a clean layered architecture with input validation, JSON-based persistence, automated testing, modular code organization, and standard Python packaging.
 
 ---
 
@@ -12,7 +12,12 @@ The project is designed using a clean layered architecture with validation, JSON
 - ✅ CLI completed
 - ✅ JSON persistence implemented
 - ✅ Automated tests implemented
-- 🚧 Documentation and project polish in progress
+- ✅ Integration and persistence tests implemented
+- ✅ Documentation completed
+- ✅ MIT License added
+- ✅ Python package configuration added
+- ✅ GitHub repository configured
+- ✅ Project successfully pushed to GitHub
 
 ---
 
@@ -40,8 +45,9 @@ The project is designed using a clean layered architecture with validation, JSON
 
 - Persistent JSON storage
 - Automatic creation of the data directory
-- Load student records when the application starts
+- Load student records from persistent storage
 - Preserve marks when updating student information
+- Save changes automatically
 
 ### Validation
 
@@ -55,19 +61,29 @@ The project is designed using a clean layered architecture with validation, JSON
 ### Testing
 
 - Unit tests
-- Service-layer tests
+- Model tests
+- Validator tests
 - Repository tests
+- Service-layer tests
 - CLI tests
 - Integration tests
 - Persistence tests
+
+### Packaging
+
+- Standard `pyproject.toml` configuration
+- Editable package installation
+- Console script entry point
+- No manual `PYTHONPATH` configuration required after installation
 
 ---
 
 ## 🛠️ Technologies Used
 
-- Python 3
+- Python 3.14
 - JSON
 - pytest
+- setuptools
 - Git
 - GitHub
 - Visual Studio Code
@@ -86,14 +102,14 @@ The project follows a layered architecture:
                │
                ▼
 ┌──────────────────────────────┐
-│       Service Layer          │
-│     Business Operations      │
+│        Service Layer         │
+│       Business Logic         │
 └──────────────┬───────────────┘
                │
                ▼
 ┌──────────────────────────────┐
 │      Repository Layer        │
-│      Data Persistence        │
+│       Data Persistence       │
 └──────────────┬───────────────┘
                │
                ▼
@@ -107,19 +123,19 @@ The project follows a layered architecture:
 
 **CLI**
 
-Handles user interaction and displays information.
+Handles user interaction, input collection, and output display.
 
 **Service Layer**
 
-Contains business logic and coordinates operations.
+Contains business logic, validation, and coordination between the CLI and repository.
 
 **Repository Layer**
 
-Handles reading and writing student data.
+Handles reading, writing, updating, and deleting persistent student data.
 
 **Model Layer**
 
-Represents the student and provides academic calculations.
+Represents the student and provides academic calculations such as total marks, average marks, and grade.
 
 **Utils**
 
@@ -136,6 +152,9 @@ Student-Management-System/
 │   └── students.json
 │
 ├── docs/
+│   ├── architecture.md
+│   ├── setup.md
+│   └── usage.md
 │
 ├── src/
 │   └── student_management/
@@ -172,6 +191,8 @@ Student-Management-System/
 │   └── test_validators.py
 │
 ├── .gitignore
+├── LICENSE
+├── pyproject.toml
 ├── pytest.ini
 ├── README.md
 └── requirements.txt
@@ -187,7 +208,13 @@ Make sure the following are installed:
 - pip
 - Git
 
-The project was developed and tested with Python 3.14.
+The project was developed and tested with:
+
+```text
+Python 3.14.7
+pytest 9.1.1
+Git 2.55.0
+```
 
 ---
 
@@ -196,7 +223,7 @@ The project was developed and tested with Python 3.14.
 ### 1. Clone the repository
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/Prashant7525/Student-Management-System.git
 ```
 
 ### 2. Navigate into the project
@@ -225,31 +252,41 @@ python -m venv .venv
 .venv\Scripts\activate
 ```
 
-### 5. Install dependencies
+### 5. Upgrade pip
 
 ```bash
-python -m pip install -r requirements.txt
+python -m pip install --upgrade pip
 ```
+
+### 6. Install the project
+
+Install the project in editable mode:
+
+```bash
+python -m pip install -e .
+```
+
+This installs the project as a Python package and allows source-code changes to be reflected immediately without reinstalling the package.
 
 ---
 
 ## ▶️ Running the Application
 
-The project currently uses a `src` layout.
+After installation, the application can be started directly.
 
-### Windows PowerShell
+### Option 1 — Python module
 
-Set the source directory for the current terminal session:
-
-```powershell
-$env:PYTHONPATH = "src"
-```
-
-Then run:
-
-```powershell
+```bash
 python -m student_management.main
 ```
+
+### Option 2 — Installed CLI command
+
+```bash
+student-management
+```
+
+No manual `PYTHONPATH` configuration is required.
 
 The main menu provides:
 
@@ -295,6 +332,22 @@ The tests cover:
 - CLI
 - Integration
 - JSON persistence
+
+Example successful test run:
+
+```text
+============================= test session starts =============================
+collected 61 items
+
+tests\test_integration.py .....
+tests\test_menu.py ............
+tests\test_repository.py .........
+tests\test_student.py .....
+tests\test_student_service.py .................
+tests\test_validators.py .............
+
+============================== 61 passed ==============================
+```
 
 ---
 
@@ -401,7 +454,14 @@ Example:
 }
 ```
 
-The repository layer automatically loads existing records and saves changes to the JSON file.
+The repository layer automatically:
+
+- Loads existing records
+- Creates the data directory when required
+- Saves new students
+- Updates existing records
+- Deletes records
+- Preserves marks during student updates
 
 ---
 
@@ -439,7 +499,6 @@ Course : Computer Science
 
 Marks:
   Python                90.00
-
 ---------------------------------------------
 Total   : 90.00
 Average : 90.00
@@ -462,10 +521,10 @@ Unit Tests
     ├── Validators
     │
     ▼
-Service Tests
+Repository Tests
     │
     ▼
-Repository Tests
+Service Tests
     │
     ▼
 CLI Tests
@@ -477,7 +536,7 @@ Integration Tests
 Persistence Tests
 ```
 
-This helps verify both individual components and the complete application workflow.
+This approach helps verify both individual components and the complete application workflow.
 
 ---
 
@@ -498,6 +557,33 @@ Examples include:
 - Subject not found
 
 User-friendly error messages are displayed through the CLI.
+
+---
+
+## 📦 Python Packaging
+
+The project uses a standard `pyproject.toml` configuration.
+
+The package uses a `src` layout:
+
+```text
+src/
+└── student_management/
+```
+
+The project can be installed in editable mode using:
+
+```bash
+python -m pip install -e .
+```
+
+The package also provides a console entry point:
+
+```bash
+student-management
+```
+
+This allows the application to be launched without manually configuring `PYTHONPATH`.
 
 ---
 
@@ -539,7 +625,10 @@ This project demonstrates practical understanding of:
 - Business logic
 - Automated testing
 - Integration testing
+- Persistence testing
+- Python packaging
 - Git version control
+- GitHub
 - Project documentation
 
 ---
@@ -557,7 +646,7 @@ Phase 5  → Service Layer
 Phase 6  → Command-Line Interface
 Phase 7  → Integration & Persistence Testing
 Phase 8  → Documentation & Project Polish
-Phase 9  → GitHub Setup
+Phase 9  → GitHub Setup & Python Packaging
 ```
 
 Each major phase was tested and committed separately using Git.
@@ -567,3 +656,5 @@ Each major phase was tested and committed separately using Git.
 ## 📜 License
 
 This project is licensed under the MIT License.
+
+See the [LICENSE](LICENSE) file for the complete license text.
