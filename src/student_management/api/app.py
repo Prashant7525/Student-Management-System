@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Query, status
+from fastapi.middleware.cors import CORSMiddleware
 
 from student_management.api.schemas import (
     MarkCreate,
@@ -7,14 +8,30 @@ from student_management.api.schemas import (
     StudentResponse,
     StudentUpdate,
 )
-from student_management.repositories.student_repository import StudentRepository
-from student_management.services.student_service import StudentService
+from student_management.repositories.student_repository import (
+    StudentRepository,
+)
+from student_management.services.student_service import (
+    StudentService,
+)
 
 
 app = FastAPI(
     title="Student Management System API",
     description="REST API for managing students and academic records.",
     version="1.0.0",
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -70,7 +87,10 @@ def search_students(
     ]
 
 
-@app.get("/students/{student_id}", response_model=StudentResponse)
+@app.get(
+    "/students/{student_id}",
+    response_model=StudentResponse,
+)
 def get_student(student_id: str) -> StudentResponse:
     """Return a student by ID."""
     student = service.get_student(student_id)
@@ -96,7 +116,9 @@ def get_student(student_id: str) -> StudentResponse:
     response_model=StudentResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def create_student(student_data: StudentCreate) -> StudentResponse:
+def create_student(
+    student_data: StudentCreate,
+) -> StudentResponse:
     """Create a new student."""
     try:
         student = service.add_student(
@@ -122,7 +144,10 @@ def create_student(student_data: StudentCreate) -> StudentResponse:
     )
 
 
-@app.put("/students/{student_id}", response_model=StudentResponse)
+@app.put(
+    "/students/{student_id}",
+    response_model=StudentResponse,
+)
 def update_student(
     student_id: str,
     student_data: StudentUpdate,
@@ -153,7 +178,9 @@ def update_student(
 
 
 @app.delete("/students/{student_id}")
-def delete_student(student_id: str) -> dict[str, str]:
+def delete_student(
+    student_id: str,
+) -> dict[str, str]:
     """Delete a student."""
     student = service.get_student(student_id)
 
@@ -166,7 +193,10 @@ def delete_student(student_id: str) -> dict[str, str]:
     service.delete_student(student_id)
 
     return {
-        "message": f"Student '{student_id.strip()}' deleted successfully."
+        "message": (
+            f"Student '{student_id.strip()}' "
+            "deleted successfully."
+        )
     }
 
 
@@ -201,7 +231,9 @@ def add_mark(
     )
 
 
-@app.delete("/students/{student_id}/marks/{subject}")
+@app.delete(
+    "/students/{student_id}/marks/{subject}"
+)
 def remove_mark(
     student_id: str,
     subject: str,
@@ -230,7 +262,9 @@ def remove_mark(
     "/students/{student_id}/result",
     response_model=ResultResponse,
 )
-def get_student_result(student_id: str) -> ResultResponse:
+def get_student_result(
+    student_id: str,
+) -> ResultResponse:
     """Return a student's academic result."""
     student = service.get_student(student_id)
 
