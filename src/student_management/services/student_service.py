@@ -1,5 +1,7 @@
 from student_management.models.student import Student
-from student_management.repositories.student_repository import StudentRepository
+from student_management.repositories.student_repository_protocol import (
+    StudentRepositoryProtocol,
+)
 from student_management.utils.validators import (
     validate_age,
     validate_course,
@@ -13,7 +15,7 @@ from student_management.utils.validators import (
 class StudentService:
     """Provide business operations for managing students."""
 
-    def __init__(self, repository: StudentRepository):
+    def __init__(self, repository: StudentRepositoryProtocol):
         self.repository = repository
 
     def add_student(

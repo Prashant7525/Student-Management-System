@@ -1,3 +1,5 @@
+import os
+
 from fastapi import FastAPI, HTTPException, Query, status
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,8 +10,9 @@ from student_management.api.schemas import (
     StudentResponse,
     StudentUpdate,
 )
-from student_management.repositories.student_repository import (
-    StudentRepository,
+from student_management.config import get_database_path
+from student_management.repositories.sqlite_student_repository import (
+    SQLiteStudentRepository,
 )
 from student_management.services.student_service import (
     StudentService,
@@ -23,19 +26,40 @@ app = FastAPI(
 )
 
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
+def get_allowed_origins() -> list[str]:
+    """Return allowed frontend origins.
+
+    Origins can be configured with the CORS_ORIGINS environment
+    variable as a comma-separated list.
+
+    Example:
+        CORS_ORIGINS=https://example.com,https://www.example.com
+    """
+    configured_origins = os.getenv("CORS_ORIGINS")
+
+    if configured_origins:
+        return [
+            origin.strip()
+            for origin in configured_origins.split(",")
+            if origin.strip()
+        ]
+
+    return [
         "http://127.0.0.1:5500",
         "http://localhost:5500",
-    ],
+    ]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=get_allowed_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 
-repository = StudentRepository()
+repository = SQLiteStudentRepository(get_database_path())
 service = StudentService(repository)
 
 
@@ -46,6 +70,15 @@ def root() -> dict[str, str]:
         "message": "Student Management System API",
         "version": "1.0.0",
         "docs": "/docs",
+    }
+
+
+@app.get("/health")
+def health_check() -> dict[str, str]:
+    """Return the health status of the API."""
+    return {
+        "status": "healthy",
+        "service": "student-management-api",
     }
 
 
@@ -87,10 +120,7 @@ def search_students(
     ]
 
 
-@app.get(
-    "/students/{student_id}",
-    response_model=StudentResponse,
-)
+@app.get("/students/{student_id}", response_model=StudentResponse)
 def get_student(student_id: str) -> StudentResponse:
     """Return a student by ID."""
     student = service.get_student(student_id)
@@ -116,9 +146,7 @@ def get_student(student_id: str) -> StudentResponse:
     response_model=StudentResponse,
     status_code=status.HTTP_201_CREATED,
 )
-def create_student(
-    student_data: StudentCreate,
-) -> StudentResponse:
+def create_student(student_data: StudentCreate) -> StudentResponse:
     """Create a new student."""
     try:
         student = service.add_student(
@@ -144,10 +172,7 @@ def create_student(
     )
 
 
-@app.put(
-    "/students/{student_id}",
-    response_model=StudentResponse,
-)
+@app.put("/students/{student_id}", response_model=StudentResponse)
 def update_student(
     student_id: str,
     student_data: StudentUpdate,
@@ -238,7 +263,7 @@ def remove_mark(
     student_id: str,
     subject: str,
 ) -> dict[str, str]:
-    """Remove a student's mark for a subject."""
+    """Remove a student's mark."""
     try:
         service.remove_marks(
             student_id=student_id,
