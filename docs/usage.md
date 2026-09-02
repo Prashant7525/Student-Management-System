@@ -1,21 +1,50 @@
 # Usage Guide
 
-## Overview
-
-The Student Management System provides a command-line interface for managing student records, academic marks, and results.
-
-Start the application with:
-
-```powershell
-$env:PYTHONPATH = "src"
-python -m student_management.main
-```
-
-The main menu contains nine operations and an exit option.
+This guide explains how to use the Student Management System through the CLI, REST API, and web interface.
 
 ---
 
-## Main Menu
+## 1. Available Interfaces
+
+The system provides three ways to interact with student records:
+
+```text
+1. Command-Line Interface (CLI)
+2. REST API
+3. Browser-based Web Interface
+```
+
+All interfaces ultimately use the same core business concepts and service operations.
+
+---
+
+# CLI Usage
+
+## 2. Start the CLI
+
+From the project root, activate the virtual environment:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Start the application:
+
+```powershell
+python -m student_management.main
+```
+
+You can also use:
+
+```powershell
+student-management
+```
+
+---
+
+## 3. Main Menu
+
+The CLI provides options similar to:
 
 ```text
 ==================================================
@@ -34,16 +63,16 @@ The main menu contains nine operations and an exit option.
 ==================================================
 ```
 
-Enter the number of the operation you want to perform.
+Choose an option by entering its number.
 
 ---
 
-## 1. Add Student
+## 4. Add a Student
 
 Select:
 
 ```text
-1
+1. Add Student
 ```
 
 The application asks for:
@@ -57,253 +86,127 @@ The application asks for:
 Example:
 
 ```text
---- Add Student ---
 Student ID: STU001
 Name: Rahul Kumar
 Age: 20
 Email: rahul@example.com
 Course: Computer Science
-
-✓ Student 'STU001' added successfully!
 ```
 
-### Validation
-
-The application checks all entered information before saving the student.
-
-Invalid input produces a user-friendly error message.
-
-For example:
-
-```text
-Student ID: ABC001
-```
-
-produces:
-
-```text
-❌ Invalid student ID.
-```
+If the information is valid, the student is stored successfully.
 
 ---
 
-## 2. View All Students
+## 5. View All Students
 
 Select:
 
 ```text
-2
+2. View All Students
 ```
 
-The application displays all stored students.
+The system displays all stored student records.
 
-Example:
-
-```text
---- All Students ---
-
-ID          Name                     Age     Course
-----------------------------------------------------------------------
-STU001      Rahul Kumar              20      Computer Science
-STU002      Priya Sharma             21      Data Science
-```
-
-If there are no students:
+Typical information includes:
 
 ```text
-No students found.
+Student ID
+Name
+Age
+Email
+Course
 ```
 
 ---
 
-## 3. Search Student
+## 6. Search for Students
 
 Select:
 
 ```text
-3
+3. Search Student
 ```
 
 Enter a search term.
 
-The system searches across:
-
-- Student ID
-- Name
-- Email
-- Course
-
-Example:
-
-```text
---- Search Student ---
-Enter search term: Rahul
-```
-
-The matching student is displayed:
-
-```text
-Found 1 student(s):
-
-ID     : STU001
-Name   : Rahul Kumar
-Age    : 20
-Email  : rahul@example.com
-Course : Computer Science
-----------------------------------------
-```
-
-The search is case-insensitive.
-
 For example:
 
 ```text
-rahul
-RAHUL
-Rahul
+Search: Rahul
 ```
 
-can all find the same student.
+The system searches student information and displays matching records.
 
 ---
 
-## 4. View Student
+## 7. View an Individual Student
 
 Select:
 
 ```text
-4
-```
-
-Enter a student ID:
-
-```text
---- View Student ---
-Student ID: STU001
-```
-
-The application displays detailed information:
-
-```text
----------------------------------------------
-Student Details
----------------------------------------------
-ID     : STU001
-Name   : Rahul Kumar
-Age    : 20
-Email  : rahul@example.com
-Course : Computer Science
-
-Marks:
-  Python               90.00
----------------------------------------------
-```
-
-If the student does not exist:
-
-```text
-❌ Student 'STU999' not found.
-```
-
----
-
-## 5. Update Student
-
-Select:
-
-```text
-5
-```
-
-Enter the student's ID:
-
-```text
---- Update Student ---
-Student ID: STU001
-```
-
-The current information is displayed as prompts:
-
-```text
-Press Enter to keep the current value.
-
-Name [Rahul Kumar]:
-Age [20]:
-Email [rahul@example.com]:
-Course [Computer Science]:
-```
-
-Pressing Enter keeps the existing value.
-
-For example, changing only the course:
-
-```text
-Name [Rahul Kumar]:
-Age [20]:
-Email [rahul@example.com]:
-Course [Computer Science]: Data Science
-```
-
-The application confirms:
-
-```text
-✓ Student 'STU001' updated successfully!
-```
-
-### Important
-
-Existing marks are preserved when student information is updated.
-
----
-
-## 6. Delete Student
-
-Select:
-
-```text
-6
+4. View Student
 ```
 
 Enter the student ID:
 
 ```text
---- Delete Student ---
 Student ID: STU001
 ```
 
-The application asks for confirmation:
-
-```text
-Student: Rahul Kumar
-Are you sure you want to delete this student? (y/n):
-```
-
-Enter:
-
-```text
-y
-```
-
-The student is deleted:
-
-```text
-✓ Student 'STU001' deleted successfully.
-```
-
-If anything other than `y` is entered, deletion is cancelled:
-
-```text
-Deletion cancelled.
-```
+The student's stored information is displayed.
 
 ---
 
-## 7. Add / Update Marks
+## 8. Update a Student
 
 Select:
 
 ```text
-7
+5. Update Student
+```
+
+Enter the student ID and provide the updated information.
+
+For example:
+
+```text
+Student ID: STU001
+Name: Rahul Kumar
+Age: 21
+Email: rahul.kumar@example.com
+Course: Computer Science
+```
+
+The existing record is updated.
+
+---
+
+## 9. Delete a Student
+
+Select:
+
+```text
+6. Delete Student
+```
+
+Enter the student ID:
+
+```text
+Student ID: STU001
+```
+
+The corresponding student record is removed from storage.
+
+---
+
+# Academic Features
+
+## 10. Add or Update Marks
+
+Select:
+
+```text
+7. Add / Update Marks
 ```
 
 Enter:
@@ -315,53 +218,27 @@ Enter:
 Example:
 
 ```text
---- Add / Update Marks ---
 Student ID: STU001
 Subject: Python
-Mark (0-100): 90
+Mark: 90
 ```
-
-The application confirms:
-
-```text
-✓ Mark for 'Python' saved successfully for Rahul Kumar.
-```
-
-### Updating a Mark
-
-If the same subject is entered again, its existing mark is updated.
-
-For example:
-
-```text
-Subject: Python
-Mark (0-100): 95
-```
-
-The Python mark becomes:
-
-```text
-Python    95.00
-```
-
-### Mark Validation
 
 Marks must be between:
 
 ```text
-0 - 100
+0 and 100
 ```
 
-Invalid values are rejected.
+If a mark already exists for the subject, it can be updated.
 
 ---
 
-## 8. Remove Marks
+## 11. Remove Marks
 
 Select:
 
 ```text
-8
+8. Remove Marks
 ```
 
 Enter:
@@ -371,89 +248,47 @@ Student ID: STU001
 Subject: Python
 ```
 
-The mark is removed:
-
-```text
-✓ Mark for 'Python' removed from Rahul Kumar.
-```
-
-If the subject does not exist:
-
-```text
-❌ Subject 'Python' does not exist for this student.
-```
+The subject mark is removed from the student's record.
 
 ---
 
-## 9. View Result
+## 12. View Result
 
 Select:
 
 ```text
-9
+9. View Result
 ```
 
-Enter the student ID:
+Enter the student ID.
+
+The system calculates:
 
 ```text
---- View Result ---
-Student ID: STU001
+Total Marks
+Average Marks
+Grade
 ```
-
-The application calculates and displays the result.
 
 Example:
 
 ```text
-=============================================
-               STUDENT RESULT
-=============================================
-ID     : STU001
-Name   : Rahul Kumar
-Course : Computer Science
+Python:   90
+Database: 85
 
-Marks:
-  Python                90.00
-  Database              80.00
-
----------------------------------------------
-Total   : 170.00
-Average : 85.00
-Grade   : A
-=============================================
+Total:    175
+Average:  87.50
+Grade:    A
 ```
-
-### Result Calculations
-
-The total is the sum of all subject marks.
-
-For example:
-
-```text
-Python     90
-Database   80
-```
-
-Total:
-
-```text
-90 + 80 = 170
-```
-
-Average:
-
-```text
-170 / 2 = 85
-```
-
-The grade is then calculated from the average.
 
 ---
 
-## Grading System
+## 13. Grading System
+
+The system uses the student's average mark.
 
 | Average | Grade |
-|---:|:---:|
+|---:|:---|
 | 90–100 | A+ |
 | 80–89 | A |
 | 70–79 | B |
@@ -461,274 +296,830 @@ The grade is then calculated from the average.
 | 50–59 | D |
 | Below 50 | F |
 
----
-
-## 0. Exit
-
-Select:
+If a student has no marks, the average is:
 
 ```text
-0
+0.0
 ```
 
-The application exits with:
+and the grade is:
 
 ```text
-Thank you for using Student Management System.
+F
 ```
 
 ---
 
-## Complete Example Workflow
+# Web Interface Usage
 
-A complete student workflow can look like this:
+## 14. Start the Backend
 
-### Step 1: Add Student
+From the project root:
+
+```powershell
+uvicorn student_management.api.app:app --reload
+```
+
+The API normally runs at:
 
 ```text
-1
+http://127.0.0.1:8000
 ```
+
+---
+
+## 15. Start the Frontend
+
+Open another PowerShell terminal.
+
+Navigate to:
+
+```powershell
+cd frontend
+```
+
+Start the frontend server:
+
+```powershell
+python -m http.server 5500
+```
+
+Open:
+
+```text
+http://127.0.0.1:5500
+```
+
+The frontend communicates with the backend API.
+
+---
+
+## 16. API Connection Status
+
+The dashboard displays the API connection status.
+
+A successful connection is shown as:
+
+```text
+🟢 API Connected
+```
+
+If the backend is unavailable, the frontend indicates that the API is disconnected.
+
+When troubleshooting, first make sure the FastAPI server is running.
+
+---
+
+## 17. Dashboard
+
+The web dashboard provides summary statistics such as:
+
+```text
+Total Students
+Courses
+Students With Marks
+```
+
+These values are updated after student operations.
+
+---
+
+## 18. Add a Student from the Web Interface
+
+Use the **Add Student** button.
 
 Enter:
 
 ```text
-STU001
-Rahul Kumar
-20
-rahul@example.com
-Computer Science
+Student ID
+Name
+Age
+Email
+Course
 ```
 
-### Step 2: Add Marks
+Submit the form.
 
-Select:
+A successful operation displays a confirmation notification.
 
-```text
-7
-```
+The student list and dashboard statistics are then refreshed.
 
-Add:
+---
 
-```text
-Python     90
-Database   85
-Math       80
-```
+## 19. Search Students from the Web Interface
 
-### Step 3: View Student
+Use the search field near the student list.
 
-Select:
-
-```text
-4
-```
-
-The student's profile and marks are displayed.
-
-### Step 4: View Result
-
-Select:
-
-```text
-9
-```
-
-The system calculates:
-
-```text
-Total   : 255.00
-Average : 85.00
-Grade   : A
-```
-
-### Step 5: Update Student
-
-Select:
-
-```text
-5
-```
-
-Change the course if necessary.
-
-Existing marks remain unchanged.
-
-### Step 6: Search Student
-
-Select:
-
-```text
-3
-```
-
-Search using:
+For example:
 
 ```text
 Rahul
 ```
 
-### Step 7: Delete Student
+The frontend sends a search request to the API and displays matching students.
 
-Select:
+Search can be cleared to return to the full student list.
+
+---
+
+## 20. Edit a Student
+
+Use the **Edit** action for the required student.
+
+Modify fields such as:
 
 ```text
-6
+Name
+Age
+Email
+Course
 ```
 
-Confirm with:
+Submit the form.
+
+The frontend sends an update request to the API and refreshes the student list.
+
+---
+
+## 21. Delete a Student
+
+Use the **Delete** action for a student.
+
+After successful deletion:
+
+- The student is removed from the database.
+- The student list is refreshed.
+- Dashboard statistics are recalculated.
+- A success notification is displayed.
+
+---
+
+## 22. Manage Marks
+
+Use the marks action for a student.
+
+Add a subject and mark.
+
+Example:
 
 ```text
-y
+Subject: Python
+Mark: 90
+```
+
+The student's marks are saved through the API.
+
+Existing subjects can be updated.
+
+Individual subjects can also be removed.
+
+---
+
+## 23. View Results
+
+Use the **Result** action for a student.
+
+The result view displays:
+
+```text
+Student
+Course
+Marks
+Total
+Average
+Grade
+```
+
+For example:
+
+```text
+Student: Rahul Kumar
+Course: Computer Science
+
+Python: 90
+
+Total:   90
+Average: 90.00
+Grade:   A+
 ```
 
 ---
 
-## Data Persistence
+# REST API Usage
 
-Student information is automatically saved to:
+## 24. API Base URL
+
+### Local
+
+```text
+http://127.0.0.1:8000
+```
+
+### Production
+
+```text
+https://student-management-api-hz6k.onrender.com
+```
+
+Swagger documentation:
+
+```text
+https://student-management-api-hz6k.onrender.com/docs
+```
+
+---
+
+## 25. Health Check
+
+Request:
+
+```text
+GET /health
+```
+
+Example:
+
+```text
+GET http://127.0.0.1:8000/health
+```
+
+Expected response:
+
+```json
+{
+    "status": "healthy",
+    "service": "student-management-api"
+}
+```
+
+---
+
+## 26. Get All Students
+
+Request:
+
+```text
+GET /students
+```
+
+Example:
+
+```text
+GET http://127.0.0.1:8000/students
+```
+
+The response contains the available student records.
+
+---
+
+## 27. Get One Student
+
+Request:
+
+```text
+GET /students/{student_id}
+```
+
+Example:
+
+```text
+GET /students/STU001
+```
+
+---
+
+## 28. Search Students
+
+Request:
+
+```text
+GET /students/search?q={query}
+```
+
+Example:
+
+```text
+GET /students/search?q=Rahul
+```
+
+The API returns students matching the search query.
+
+---
+
+## 29. Create a Student
+
+Request:
+
+```text
+POST /students
+```
+
+Example JSON:
+
+```json
+{
+    "student_id": "STU001",
+    "name": "Rahul Kumar",
+    "age": 20,
+    "email": "rahul@example.com",
+    "course": "Computer Science"
+}
+```
+
+---
+
+## 30. Update a Student
+
+Request:
+
+```text
+PUT /students/{student_id}
+```
+
+Example:
+
+```text
+PUT /students/STU001
+```
+
+Request body:
+
+```json
+{
+    "name": "Rahul Kumar",
+    "age": 21,
+    "email": "rahul.kumar@example.com",
+    "course": "Computer Science"
+}
+```
+
+---
+
+## 31. Delete a Student
+
+Request:
+
+```text
+DELETE /students/{student_id}
+```
+
+Example:
+
+```text
+DELETE /students/STU001
+```
+
+---
+
+## 32. Add or Update a Mark
+
+Request:
+
+```text
+POST /students/{student_id}/marks
+```
+
+Example:
+
+```text
+POST /students/STU001/marks
+```
+
+Request body:
+
+```json
+{
+    "subject": "Python",
+    "mark": 90
+}
+```
+
+---
+
+## 33. Remove a Mark
+
+Request:
+
+```text
+DELETE /students/{student_id}/marks/{subject}
+```
+
+Example:
+
+```text
+DELETE /students/STU001/marks/Python
+```
+
+---
+
+## 34. Get a Student Result
+
+Request:
+
+```text
+GET /students/{student_id}/result
+```
+
+Example:
+
+```text
+GET /students/STU001/result
+```
+
+Example response:
+
+```json
+{
+    "student_id": "STU001",
+    "name": "Rahul Kumar",
+    "course": "Computer Science",
+    "marks": {
+        "Python": 90.0
+    },
+    "total": 90.0,
+    "average": 90.0,
+    "grade": "A+"
+}
+```
+
+---
+
+# Validation
+
+## 35. Student ID Validation
+
+Valid examples:
+
+```text
+STU001
+STU123
+stu456
+```
+
+Invalid examples:
+
+```text
+ABC001
+STUDENT001
+STU
+123
+```
+
+The ID must begin with `STU` and contain at least one digit after it.
+
+---
+
+## 36. Name Validation
+
+Names must:
+
+- Not be empty
+- Contain letters and spaces
+
+Example:
+
+```text
+Rahul Kumar
+```
+
+---
+
+## 37. Age Validation
+
+Age must be an integer from:
+
+```text
+1 to 100
+```
+
+---
+
+## 38. Email Validation
+
+A basic email format is required.
+
+Example:
+
+```text
+rahul@example.com
+```
+
+---
+
+## 39. Course Validation
+
+Course names cannot be empty.
+
+Example:
+
+```text
+Computer Science
+```
+
+---
+
+## 40. Mark Validation
+
+Marks must be numeric values from:
+
+```text
+0 to 100
+```
+
+Examples:
+
+```text
+0
+75
+90
+100
+```
+
+---
+
+# Persistence
+
+## 41. JSON Persistence
+
+The JSON repository stores records in:
 
 ```text
 data/students.json
 ```
 
-Changes are persisted when:
-
-- A student is added
-- Student information is updated
-- Marks are added
-- Marks are updated
-- Marks are removed
-- A student is deleted
-
-This means the data remains available after closing and reopening the application.
+This repository is useful for local file-based storage and migration.
 
 ---
 
-## Error Handling
+## 42. SQLite Persistence
 
-The application handles common errors without crashing.
-
-Examples include:
-
-### Invalid Student ID
+The SQLite repository stores records in:
 
 ```text
-❌ Invalid student ID.
+data/students.db
 ```
 
-### Invalid Name
+The database is automatically created when the SQLite repository is initialized.
+
+The path can be configured with:
 
 ```text
-❌ Invalid student name.
-```
-
-### Invalid Age
-
-```text
-❌ Invalid age.
-```
-
-### Invalid Email
-
-```text
-❌ Invalid email address.
-```
-
-### Invalid Mark
-
-```text
-❌ Mark must be between 0 and 100.
-```
-
-### Duplicate Student
-
-```text
-❌ Student with ID 'STU001' already exists.
-```
-
-### Student Not Found
-
-```text
-❌ Student 'STU999' not found.
-```
-
-### Empty Search
-
-An empty search term produces:
-
-```text
-No matching students found.
+STUDENT_DATABASE_PATH
 ```
 
 ---
 
-## Tips for Using the Application
+## 43. JSON to SQLite Migration
 
-- Use unique student IDs.
-- Follow the `STU` + digits format.
-- Enter marks between 0 and 100.
-- Use a valid email format.
-- Press Enter during an update when you want to keep the current value.
-- Confirm deletion carefully.
-- Run `pytest` after making code changes.
-
----
-
-## Data File
-
-The application stores records in:
-
-```text
-data/students.json
-```
-
-Do not manually edit this file unless you understand the JSON structure.
-
-Invalid JSON may prevent existing records from loading correctly.
-
----
-
-## Testing the Application
-
-Before committing changes, run:
+To migrate JSON data to SQLite:
 
 ```powershell
-pytest
+python -m student_management.utils.migrate_json_to_sqlite
 ```
 
-The project currently has:
-
-```text
-61 tests
-61 passed
-```
-
-A successful test run indicates that the core functionality, CLI, service layer, repository, validation, integration, and persistence behavior are working as expected.
+The migration avoids inserting students that already exist in SQLite.
 
 ---
 
-## Recommended User Flow
+# Production Usage
 
-For a new student, the recommended sequence is:
+## 44. Production Frontend
+
+The live web application is available at:
 
 ```text
-Add Student
-     ↓
-Add / Update Marks
-     ↓
-View Student
-     ↓
+https://student-management-system-indol-theta.vercel.app
+```
+
+Open the site in a browser and verify:
+
+```text
+🟢 API Connected
+```
+
+---
+
+## 45. Production Backend
+
+The live API is available at:
+
+```text
+https://student-management-api-hz6k.onrender.com
+```
+
+Health check:
+
+```text
+https://student-management-api-hz6k.onrender.com/health
+```
+
+Swagger:
+
+```text
+https://student-management-api-hz6k.onrender.com/docs
+```
+
+---
+
+## 46. Recommended Production Test
+
+A complete functional workflow is:
+
+```text
+Open Web Application
+        ↓
+Confirm API Connected
+        ↓
+Create Student
+        ↓
+Add Mark
+        ↓
 View Result
-     ↓
-Search / Update if needed
-     ↓
-Delete when no longer required
+        ↓
+Search Student
+        ↓
+Edit Student
+        ↓
+Delete Student
+        ↓
+Confirm Student Removed
+```
+
+This workflow verifies the main frontend-to-backend functionality.
+
+---
+
+## 47. Free-Tier Limitation
+
+The deployed backend currently uses a free Render service with SQLite.
+
+The service may spin down after inactivity, which can cause a noticeable delay on the first request after inactivity.
+
+Because the database is stored as a local SQLite file, the deployed data should not be considered permanent production storage.
+
+For production use, a managed persistent database such as PostgreSQL is recommended.
+
+---
+
+# Troubleshooting
+
+## 48. API Disconnected
+
+If the frontend shows an API connection problem:
+
+1. Check that the FastAPI server is running.
+2. Open `/health`.
+3. Check `API_BASE_URL` in `frontend/js/app.js`.
+4. Check the browser console.
+5. Verify CORS configuration.
+
+---
+
+## 49. Student Not Found
+
+Make sure the correct student ID is being used.
+
+Example:
+
+```text
+STU001
+```
+
+Student IDs are case-insensitive during validation, but the stored identifier should be used consistently.
+
+---
+
+## 50. Validation Error
+
+Check:
+
+- Student ID format
+- Name
+- Age
+- Email
+- Course
+- Mark range
+
+The API also returns validation errors when request data does not satisfy the Pydantic schema.
+
+---
+
+## 51. No Students Displayed
+
+Check:
+
+1. The API is running.
+2. The database contains records.
+3. The frontend is using the correct API URL.
+4. No CORS error is present.
+5. The request to `/students` succeeds.
+
+---
+
+# Testing
+
+## 52. Run Tests
+
+From the project root:
+
+```powershell
+python -m pytest -q
+```
+
+The current suite contains:
+
+```text
+85 tests
+```
+
+Expected result:
+
+```text
+85 passed
 ```
 
 ---
 
-## Conclusion
+## 53. Detailed Test Output
 
-The Student Management System provides a simple command-line workflow for managing student information and academic records.
+Use:
 
-The application combines validation, business logic, JSON persistence, and automated testing to provide a reliable foundation for future improvements such as SQLite, GUI, REST API, and web-based interfaces.
+```powershell
+python -m pytest -v
+```
+
+This displays each individual test.
+
+---
+
+## 54. Final Usage Workflow
+
+For a normal local development session:
+
+### Terminal 1 — Backend
+
+```powershell
+.venv\Scripts\Activate.ps1
+uvicorn student_management.api.app:app --reload
+```
+
+### Terminal 2 — Frontend
+
+```powershell
+.venv\Scripts\Activate.ps1
+cd frontend
+python -m http.server 5500
+```
+
+Then open:
+
+```text
+http://127.0.0.1:5500
+```
+
+Use the browser interface to manage students.
+
+---
+
+## Summary
+
+The Student Management System can be used through:
+
+```text
+CLI
+ │
+ ├── Student CRUD
+ ├── Search
+ ├── Marks
+ └── Results
+
+REST API
+ │
+ ├── Student CRUD
+ ├── Search
+ ├── Marks
+ ├── Results
+ └── Health
+
+Web Frontend
+ │
+ ├── Dashboard
+ ├── Student CRUD
+ ├── Search
+ ├── Marks
+ ├── Results
+ └── API Status
+```
+
+The production application is available at:
+
+```text
+Frontend:
+https://student-management-system-indol-theta.vercel.app
+
+Backend:
+https://student-management-api-hz6k.onrender.com
+
+Swagger:
+https://student-management-api-hz6k.onrender.com/docs
+```

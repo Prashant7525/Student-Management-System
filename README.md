@@ -1,23 +1,46 @@
 # Student Management System
 
-A beginner-to-intermediate Python project for managing student records, academic information, marks, and results through a command-line interface.
+A modular Python-based Student Management System that provides student CRUD operations, academic marks management, result calculation, REST API access, and a web-based interface.
 
-The project is designed using a clean layered architecture with input validation, JSON-based persistence, automated testing, modular code organization, and standard Python packaging.
+The project was developed incrementally with clean architecture, input validation, automated testing, JSON and SQLite persistence, Python packaging, Git/GitHub workflows, and cloud deployment.
+
+## 🌐 Live Demo
+
+**Frontend:**  
+https://student-management-system-indol-theta.vercel.app
+
+**Backend API:**  
+https://student-management-api-hz6k.onrender.com
+
+**API Documentation (Swagger):**  
+https://student-management-api-hz6k.onrender.com/docs
+
+> The live demo uses Vercel for the frontend and Render for the FastAPI backend.
 
 ---
 
 ## 📌 Project Status
 
-- ✅ Core functionality completed
-- ✅ CLI completed
+- ✅ Student management completed
+- ✅ CLI application completed
 - ✅ JSON persistence implemented
-- ✅ Automated tests implemented
+- ✅ SQLite persistence implemented
+- ✅ Service/repository architecture implemented
+- ✅ Input validation implemented
+- ✅ REST API implemented with FastAPI
+- ✅ Swagger/OpenAPI documentation available
+- ✅ Responsive web frontend implemented
+- ✅ Frontend connected to production API
+- ✅ Automated API tests implemented
+- ✅ SQLite repository tests implemented
 - ✅ Integration and persistence tests implemented
-- ✅ Documentation completed
+- ✅ Python package configuration implemented
+- ✅ Console entry point implemented
+- ✅ Render deployment completed
+- ✅ Vercel deployment completed
+- ✅ Production CRUD workflow verified
+- ✅ 85 automated tests passing
 - ✅ MIT License added
-- ✅ Python package configuration added
-- ✅ GitHub repository configured
-- ✅ Project successfully pushed to GitHub
 
 ---
 
@@ -25,121 +48,190 @@ The project is designed using a clean layered architecture with input validation
 
 ### Student Management
 
-- Add new students
+- Add students
 - View all students
+- View individual students
 - Search students
-- View individual student details
 - Update student information
 - Delete students
 
 ### Academic Management
 
-- Add marks for subjects
+- Add subject marks
 - Update existing marks
 - Remove subject marks
 - Calculate total marks
 - Calculate average marks
 - Automatically calculate grades
-
-### Data Management
-
-- Persistent JSON storage
-- Automatic creation of the data directory
-- Load student records from persistent storage
-- Preserve marks when updating student information
-- Save changes automatically
+- View student results
 
 ### Validation
 
-- Student ID validation
-- Student name validation
-- Age validation
-- Email validation
-- Course validation
-- Marks validation
+The system validates:
 
-### Testing
+- Student IDs
+- Names
+- Ages
+- Email addresses
+- Course names
+- Marks
 
-- Unit tests
-- Model tests
-- Validator tests
-- Repository tests
-- Service-layer tests
-- CLI tests
-- Integration tests
-- Persistence tests
+### Persistence
 
-### Packaging
+Two repository implementations are available:
 
-- Standard `pyproject.toml` configuration
-- Editable package installation
-- Console script entry point
-- No manual `PYTHONPATH` configuration required after installation
+- JSON repository
+- SQLite repository
+
+The application uses SQLite for the deployed API while JSON remains available for the original local storage workflow and migration support.
+
+### REST API
+
+The FastAPI backend provides endpoints for:
+
+- Student CRUD operations
+- Student search
+- Marks management
+- Result calculation
+- Health checking
+
+### Web Interface
+
+The frontend provides:
+
+- Dashboard statistics
+- Student table
+- Search
+- Add student
+- Edit student
+- Delete student
+- Marks management
+- Result display
+- API connection status
+- Toast notifications
+- Input validation feedback
 
 ---
 
-## 🛠️ Technologies Used
+## 🛠️ Technology Stack
+
+### Backend
 
 - Python 3.14
+- FastAPI
+- Pydantic
+- Uvicorn
+- SQLite
 - JSON
+
+### Frontend
+
+- HTML5
+- CSS3
+- JavaScript
+
+### Testing
+
 - pytest
-- setuptools
+- httpx2
+
+### Development Tools
+
 - Git
 - GitHub
 - Visual Studio Code
+- Python virtual environment
+- setuptools
+
+### Deployment
+
+- Vercel — frontend
+- Render — backend API
 
 ---
 
 ## 🏗️ Architecture
 
-The project follows a layered architecture:
+The project follows a layered architecture with a separate web/API layer.
 
 ```text
-┌──────────────────────────────┐
-│       Command-Line UI        │
-│            (CLI)             │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│        Service Layer         │
-│       Business Logic         │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│      Repository Layer        │
-│       Data Persistence       │
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│        JSON Storage          │
-│     data/students.json       │
-└──────────────────────────────┘
+                         ┌──────────────────────┐
+                         │     Web Browser      │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │  Vercel Frontend     │
+                         │  HTML/CSS/JavaScript │
+                         └──────────┬───────────┘
+                                    │ HTTPS
+                                    ▼
+                         ┌──────────────────────┐
+                         │   FastAPI Backend    │
+                         │      on Render       │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │    Service Layer     │
+                         │    Business Logic    │
+                         └──────────┬───────────┘
+                                    │
+                                    ▼
+                         ┌──────────────────────┐
+                         │  Repository Layer    │
+                         └──────────┬───────────┘
+                                    │
+                         ┌──────────┴───────────┐
+                         ▼                      ▼
+                ┌─────────────────┐    ┌─────────────────┐
+                │ SQLite          │    │ JSON            │
+                │ Repository      │    │ Repository      │
+                └─────────────────┘    └─────────────────┘
 ```
 
-### Layer Responsibilities
+### Backend layers
 
-**CLI**
+```text
+API Layer
+    ↓
+Service Layer
+    ↓
+Repository Layer
+    ↓
+Database / JSON Storage
+```
 
-Handles user interaction, input collection, and output display.
+### Core components
 
-**Service Layer**
-
-Contains business logic, validation, and coordination between the CLI and repository.
-
-**Repository Layer**
-
-Handles reading, writing, updating, and deleting persistent student data.
-
-**Model Layer**
-
-Represents the student and provides academic calculations such as total marks, average marks, and grade.
-
-**Utils**
-
-Contains reusable validation functions.
+```text
+src/student_management/
+│
+├── api/
+│   ├── app.py
+│   └── schemas.py
+│
+├── cli/
+│   └── menu.py
+│
+├── models/
+│   └── student.py
+│
+├── repositories/
+│   ├── student_repository.py
+│   ├── sqlite_student_repository.py
+│   └── student_repository_protocol.py
+│
+├── services/
+│   └── student_service.py
+│
+├── utils/
+│   ├── validators.py
+│   └── migrate_json_to_sqlite.py
+│
+├── config.py
+└── main.py
+```
 
 ---
 
@@ -156,8 +248,19 @@ Student-Management-System/
 │   ├── setup.md
 │   └── usage.md
 │
+├── frontend/
+│   ├── index.html
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── app.js
+│
 ├── src/
 │   └── student_management/
+│       ├── api/
+│       │   ├── __init__.py
+│       │   ├── app.py
+│       │   └── schemas.py
 │       │
 │       ├── cli/
 │       │   ├── __init__.py
@@ -169,7 +272,9 @@ Student-Management-System/
 │       │
 │       ├── repositories/
 │       │   ├── __init__.py
-│       │   └── student_repository.py
+│       │   ├── student_repository.py
+│       │   ├── sqlite_student_repository.py
+│       │   └── student_repository_protocol.py
 │       │
 │       ├── services/
 │       │   ├── __init__.py
@@ -177,24 +282,30 @@ Student-Management-System/
 │       │
 │       ├── utils/
 │       │   ├── __init__.py
-│       │   └── validators.py
+│       │   ├── validators.py
+│       │   └── migrate_json_to_sqlite.py
 │       │
 │       ├── __init__.py
+│       ├── config.py
 │       └── main.py
 │
 ├── tests/
+│   ├── test_api.py
 │   ├── test_integration.py
 │   ├── test_menu.py
 │   ├── test_repository.py
+│   ├── test_sqlite_repository.py
 │   ├── test_student.py
 │   ├── test_student_service.py
 │   └── test_validators.py
 │
 ├── .gitignore
+├── .python-version
 ├── LICENSE
 ├── pyproject.toml
 ├── pytest.ini
 ├── README.md
+├── render.yaml
 └── requirements.txt
 ```
 
@@ -202,13 +313,12 @@ Student-Management-System/
 
 ## ⚙️ Requirements
 
-Make sure the following are installed:
-
-- Python 3.10 or newer
-- pip
+- Python 3.10+
 - Git
+- pip
+- A modern web browser
 
-The project was developed and tested with:
+The project was developed and tested using:
 
 ```text
 Python 3.14.7
@@ -218,148 +328,201 @@ Git 2.55.0
 
 ---
 
-## 🚀 Installation
+## 🚀 Local Installation
 
 ### 1. Clone the repository
 
-```bash
+```powershell
 git clone https://github.com/Prashant7525/Student-Management-System.git
 ```
 
-### 2. Navigate into the project
+### 2. Enter the project directory
 
-```bash
+```powershell
 cd Student-Management-System
 ```
 
 ### 3. Create a virtual environment
 
-```bash
+```powershell
 python -m venv .venv
 ```
 
-### 4. Activate the virtual environment
+### 4. Activate the environment
 
-#### Windows PowerShell
+Windows PowerShell:
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-#### Windows Command Prompt
+### 5. Install the project
 
-```cmd
-.venv\Scripts\activate
+For development and testing:
+
+```powershell
+python -m pip install -e ".[dev]"
 ```
 
-### 5. Upgrade pip
+For a normal package installation:
 
-```bash
-python -m pip install --upgrade pip
+```powershell
+python -m pip install .
 ```
-
-### 6. Install the project
-
-Install the project in editable mode:
-
-```bash
-python -m pip install -e .
-```
-
-This installs the project as a Python package and allows source-code changes to be reflected immediately without reinstalling the package.
 
 ---
 
-## ▶️ Running the Application
+## ▶️ Run the CLI
 
-After installation, the application can be started directly.
+After installation:
 
-### Option 1 — Python module
-
-```bash
+```powershell
 python -m student_management.main
 ```
 
-### Option 2 — Installed CLI command
+Or use the installed console command:
 
-```bash
+```powershell
 student-management
 ```
 
-No manual `PYTHONPATH` configuration is required.
+---
 
-The main menu provides:
+## 🌐 Run the API Locally
+
+Start the FastAPI server:
+
+```powershell
+uvicorn student_management.api.app:app --reload
+```
+
+The API will normally be available at:
 
 ```text
-==================================================
-           STUDENT MANAGEMENT SYSTEM
-==================================================
-1. Add Student
-2. View All Students
-3. Search Student
-4. View Student
-5. Update Student
-6. Delete Student
-7. Add / Update Marks
-8. Remove Marks
-9. View Result
-0. Exit
-==================================================
+http://127.0.0.1:8000
+```
+
+Health check:
+
+```text
+http://127.0.0.1:8000/health
+```
+
+Swagger documentation:
+
+```text
+http://127.0.0.1:8000/docs
 ```
 
 ---
 
-## 🧪 Running Tests
+## 🖥️ Run the Frontend Locally
 
-Activate the virtual environment and run:
-
-```bash
-pytest
-```
-
-Current test suite:
+The frontend is located in:
 
 ```text
-61 passed
+frontend/
 ```
 
-The tests cover:
+For local development:
+
+```powershell
+cd frontend
+python -m http.server 5500
+```
+
+Then open:
+
+```text
+http://127.0.0.1:5500
+```
+
+The frontend communicates with the configured API endpoint in:
+
+```text
+frontend/js/app.js
+```
+
+---
+
+## 🔌 API Endpoints
+
+### Health
+
+```text
+GET /health
+```
+
+### Students
+
+```text
+GET    /students
+GET    /students/{student_id}
+POST   /students
+PUT    /students/{student_id}
+DELETE /students/{student_id}
+```
+
+### Search
+
+```text
+GET /students/search?q={query}
+```
+
+### Marks
+
+```text
+POST   /students/{student_id}/marks
+DELETE /students/{student_id}/marks/{subject}
+```
+
+### Result
+
+```text
+GET /students/{student_id}/result
+```
+
+---
+
+## 🧪 Testing
+
+The project uses pytest.
+
+Run the complete test suite:
+
+```powershell
+python -m pytest -q
+```
+
+Current result:
+
+```text
+85 passed
+```
+
+The test suite covers:
 
 - Student model
-- Validators
-- Repository
+- Validation
+- JSON repository
+- SQLite repository
 - Service layer
 - CLI
-- Integration
-- JSON persistence
-
-Example successful test run:
-
-```text
-============================= test session starts =============================
-collected 61 items
-
-tests\test_integration.py .....
-tests\test_menu.py ............
-tests\test_repository.py .........
-tests\test_student.py .....
-tests\test_student_service.py .................
-tests\test_validators.py .............
-
-============================== 61 passed ==============================
-```
+- API endpoints
+- Integration workflows
+- Persistence behavior
 
 ---
 
-## 📋 Validation Rules
+## 📊 Validation Rules
 
 ### Student ID
 
-A valid student ID:
+Must:
 
-- Starts with `STU`
-- Is followed by one or more digits
-- Is case-insensitive
+- Start with `STU`
+- Be followed by one or more digits
+- Be case-insensitive
 
 Examples:
 
@@ -371,20 +534,10 @@ stu456
 
 ### Name
 
-Names:
-
-- Cannot be empty
-- Can contain letters and spaces
-
-Example:
-
-```text
-Rahul Kumar
-```
+- Must not be empty
+- Must contain letters and spaces
 
 ### Age
-
-Age must be between:
 
 ```text
 1 - 100
@@ -392,7 +545,7 @@ Age must be between:
 
 ### Email
 
-A basic email format is required.
+A basic valid email format is required.
 
 Example:
 
@@ -406,7 +559,7 @@ The course name cannot be empty.
 
 ### Marks
 
-Marks must be between:
+Marks must be:
 
 ```text
 0 - 100
@@ -416,10 +569,10 @@ Marks must be between:
 
 ## 🎓 Grading System
 
-The system calculates the grade using the student's average marks.
+Grades are calculated using the student's average marks.
 
 | Average | Grade |
-|---:|:---:|
+|---:|:---|
 | 90–100 | A+ |
 | 80–89 | A |
 | 70–79 | B |
@@ -427,215 +580,254 @@ The system calculates the grade using the student's average marks.
 | 50–59 | D |
 | Below 50 | F |
 
+Example:
+
+```text
+Python: 90
+
+Total:   90
+Average: 90.00
+Grade:   A+
+```
+
 ---
 
 ## 💾 Data Persistence
 
-Student records are stored in:
+### JSON
+
+The JSON repository stores records in:
 
 ```text
 data/students.json
 ```
 
+### SQLite
+
+The SQLite repository uses:
+
+```text
+data/students.db
+```
+
+The SQLite database path can be configured using:
+
+```text
+STUDENT_DATABASE_PATH
+```
+
 Example:
 
-```json
-{
-    "STU001": {
-        "student_id": "STU001",
-        "name": "Rahul Kumar",
-        "age": 20,
-        "email": "rahul@example.com",
-        "course": "Computer Science",
-        "marks": {
-            "Python": 90.0
-        }
-    }
-}
+```powershell
+$env:STUDENT_DATABASE_PATH="data/students.db"
 ```
 
-The repository layer automatically:
-
-- Loads existing records
-- Creates the data directory when required
-- Saves new students
-- Updates existing records
-- Deletes records
-- Preserves marks during student updates
+For deployment, the database path can point to a persistent mounted location when the hosting platform provides one.
 
 ---
 
-## 🔍 Example Workflow
+## 🔄 JSON to SQLite Migration
 
-A typical workflow:
+The project includes a migration utility:
 
 ```text
-Start Application
-       ↓
-Add Student
-       ↓
-Add Subject Marks
-       ↓
-View Student
-       ↓
-View Result
-       ↓
-Calculate Total
-       ↓
-Calculate Average
-       ↓
-Calculate Grade
+src/student_management/utils/migrate_json_to_sqlite.py
 ```
 
-Example result:
+Run it with:
+
+```powershell
+python -m student_management.utils.migrate_json_to_sqlite
+```
+
+The migration copies students from JSON storage into SQLite without duplicating students that already exist in the SQLite database.
+
+---
+
+## ☁️ Deployment
+
+### Frontend — Vercel
+
+The static frontend is deployed from:
 
 ```text
-=============================================
-               STUDENT RESULT
-=============================================
-ID     : STU001
-Name   : Rahul Kumar
-Course : Computer Science
-
-Marks:
-  Python                90.00
----------------------------------------------
-Total   : 90.00
-Average : 90.00
-Grade   : A+
-=============================================
+frontend/
 ```
 
----
-
-## 🧪 Testing Strategy
-
-The project uses pytest for automated testing.
-
-Testing is organized into multiple layers:
+Production frontend:
 
 ```text
-Unit Tests
-    │
-    ├── Student Model
-    ├── Validators
-    │
-    ▼
-Repository Tests
-    │
-    ▼
-Service Tests
-    │
-    ▼
-CLI Tests
-    │
-    ▼
-Integration Tests
-    │
-    ▼
-Persistence Tests
+https://student-management-system-indol-theta.vercel.app
 ```
 
-This approach helps verify both individual components and the complete application workflow.
+### Backend — Render
 
----
-
-## 🔐 Error Handling
-
-The application handles invalid user input without terminating unexpectedly.
-
-Examples include:
-
-- Invalid student ID
-- Invalid name
-- Invalid age
-- Invalid email
-- Invalid course
-- Invalid marks
-- Duplicate student ID
-- Student not found
-- Subject not found
-
-User-friendly error messages are displayed through the CLI.
-
----
-
-## 📦 Python Packaging
-
-The project uses a standard `pyproject.toml` configuration.
-
-The package uses a `src` layout:
+The FastAPI application is deployed using:
 
 ```text
-src/
-└── student_management/
+render.yaml
 ```
 
-The project can be installed in editable mode using:
+Production API:
 
-```bash
-python -m pip install -e .
+```text
+https://student-management-api-hz6k.onrender.com
 ```
 
-The package also provides a console entry point:
+The backend uses:
 
-```bash
-student-management
+```text
+uvicorn student_management.api.app:app --host 0.0.0.0 --port $PORT
 ```
 
-This allows the application to be launched without manually configuring `PYTHONPATH`.
+### CORS
+
+The backend uses the `CORS_ORIGINS` environment variable.
+
+The production frontend domain is included in the Render configuration.
 
 ---
 
-## 📈 Future Improvements
+## ⚠️ Free-Tier Deployment Note
 
-Possible future versions may include:
+The current deployment uses SQLite on a free Render web service.
 
-- SQLite database support
-- Advanced search and filtering
-- Sorting students
-- Attendance management
-- More detailed academic reports
-- Export results to CSV/PDF
-- GUI application
-- REST API
-- Web-based interface
+Free hosting environments may spin down inactive services and may not provide persistent disk storage.
+
+Therefore, the deployed SQLite database should be considered suitable for demonstration and portfolio purposes rather than production-critical data.
+
+For a production system, the database should be moved to a managed persistent database such as PostgreSQL and configured with appropriate backups and operational monitoring.
+
+---
+
+## 🔐 Security Considerations
+
+The current project is intended as a learning and portfolio application.
+
+It currently does not implement:
+
 - User authentication
-- Admin dashboard
-- Database migrations
-- Logging
-- Configuration management
+- Role-based access control
+- Password management
+- Production database backups
+- Rate limiting
+- Advanced audit logging
+
+These are potential future enhancements for a larger production deployment.
+
+---
+
+## 🧪 Production Verification
+
+The deployed application was manually verified through the public frontend.
+
+Verified operations include:
+
+```text
+API Connection          ✅
+Create Student          ✅
+Read Student            ✅
+Update Student          ✅
+Delete Student          ✅
+Search Student          ✅
+Add Marks               ✅
+View Result             ✅
+Dashboard Statistics    ✅
+Vercel Frontend         ✅
+Render Backend          ✅
+```
+
+Example verified workflow:
+
+```text
+Create STU001
+     ↓
+Add Python mark: 90
+     ↓
+View Result
+     ↓
+Total: 90
+Average: 90.00
+Grade: A+
+     ↓
+Search Rahul
+     ↓
+Update student
+     ↓
+Delete student
+```
+
+---
+
+## 📚 Documentation
+
+Detailed documentation is available in:
+
+- [Architecture Guide](docs/architecture.md)
+- [Setup Guide](docs/setup.md)
+- [Usage Guide](docs/usage.md)
 
 ---
 
 ## 🎯 Learning Objectives
 
-This project demonstrates practical understanding of:
+This project demonstrates practical experience with:
 
 - Python programming
 - Object-oriented programming
 - Dataclasses
-- Modular architecture
+- Clean architecture
 - Separation of concerns
+- Repository pattern
+- Service layer design
+- Protocol-based abstraction
 - Input validation
 - Exception handling
-- File handling
 - JSON serialization
+- SQLite
 - CRUD operations
-- Business logic
+- REST APIs
+- FastAPI
+- Pydantic
+- HTML/CSS/JavaScript
+- CORS
 - Automated testing
 - Integration testing
 - Persistence testing
 - Python packaging
-- Git version control
+- Git
 - GitHub
-- Project documentation
+- Cloud deployment
+- Documentation
 
 ---
 
-## 👨‍💻 Development Approach
+## 🔮 Future Improvements
 
-The project was developed incrementally using separate development phases.
+Possible future versions may include:
+
+- PostgreSQL production database
+- Authentication and authorization
+- Admin dashboard
+- Role-based access control
+- Attendance management
+- Course management
+- Advanced filtering and sorting
+- CSV/PDF exports
+- Detailed academic reports
+- Automated database migrations
+- Structured logging
+- CI/CD workflows
+- API rate limiting
+- Production monitoring
+- Custom domain
+- Automated backups
+
+---
+
+## 🧩 Development Approach
+
+The project was developed incrementally:
 
 ```text
 Phase 1  → Project Foundation
@@ -643,13 +835,14 @@ Phase 2  → Student Model
 Phase 3  → Input Validation
 Phase 4  → JSON Repository
 Phase 5  → Service Layer
-Phase 6  → Command-Line Interface
+Phase 6  → CLI
 Phase 7  → Integration & Persistence Testing
 Phase 8  → Documentation & Project Polish
-Phase 9  → GitHub Setup & Python Packaging
+Phase 9  → GitHub & Python Packaging
+Phase 10 → FastAPI, SQLite, Web Frontend & Deployment
 ```
 
-Each major phase was tested and committed separately using Git.
+Each major phase was tested and committed using Git.
 
 ---
 
@@ -657,4 +850,4 @@ Each major phase was tested and committed separately using Git.
 
 This project is licensed under the MIT License.
 
-See the [LICENSE](LICENSE) file for the complete license text.
+See the [MIT License](https://github.com/Prashant7525/Student-Management-System/blob/main/LICENSE) for details.
