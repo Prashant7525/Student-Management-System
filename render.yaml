@@ -5,12 +5,3 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn student_management.api.app:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
-
-    envVars:
-      - key: STUDENT_DATABASE_PATH
-        value: /var/data/students.db
-
-    disk:
-      name: student-data
-      mountPath: /var/data
-      sizeGB: 1
